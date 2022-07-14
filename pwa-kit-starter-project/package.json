@@ -90,5 +90,9 @@
     "iOS >= 9.0",
     "Android >= 4.4.4",
     "last 4 ChromeAndroid versions"
-  ]
+  ],
+  "dependencies": {
+    "@apollo/client": "^3.6.9",
+    "graphql": "^16.5.0"
+  }
 }

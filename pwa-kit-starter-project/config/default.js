@@ -6,7 +6,7 @@ module.exports = {
             // Determine where the siteRef is located. Valid values include 'path|query_param|none'. Defaults to: 'none'
             // site: 'none',
             // Determine where the localeRef is located. Valid values include 'path|query_param|none'. Defaults to: 'none'
-            locale: 'none',
+            locale: 'none'
             // This boolean value dictates whether or not default site or locale values are shown in the url. Defaults to: false
             // showDefaults: true
         },
@@ -28,6 +28,15 @@ module.exports = {
                 siteId: 'RefArch'
             }
         },
+        contentfulAPI: {
+            proxyPath: `/mobify/proxy/contentful`,
+            parameters: {
+                contentVersion: 'v1',
+                spaceId: '3lz0er58daer',
+                environmentId: 'first_approach',
+                appCDAToken: '-oHiB8QoWcMvReBXkYnNq-mULPGBWVyYiwD6j1Cg9M0'
+            }
+        },
         // Einstein api config
         einsteinAPI: {
             proxyPath: `/mobify/proxy/einstein`,
@@ -41,10 +50,10 @@ module.exports = {
     pageNotFoundURL: '/page-not-found',
     // Enables or disables building the files necessary for server-side rendering.
     ssrEnabled: true,
-    // This list determines which files are available exclusively to the server-side rendering system 
+    // This list determines which files are available exclusively to the server-side rendering system
     // and are not available through the /mobify/bundle/ path.
     ssrOnly: ['ssr.js', 'ssr.js.map', 'node_modules/**/*.*'],
-    // This list determines which files are available to the server-side rendering system 
+    // This list determines which files are available to the server-side rendering system
     // and available through the /mobify/bundle/ path.
     ssrShared: [
         'static/ico/favicon.ico',
@@ -64,6 +73,10 @@ module.exports = {
             {
                 host: 'zzte-053.sandbox.us02.dx.commercecloud.salesforce.com',
                 path: 'ocapi'
+            },
+            {
+                host: 'graphql.contentful.com',
+                path: 'contentful'
             },
             {
                 host: 'api.cquotient.com',

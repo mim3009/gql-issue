@@ -29,6 +29,10 @@ import Seo from '../../components/seo'
 import Section from '../../components/section'
 import ProductScroller from '../../components/product-scroller'
 
+import {useServerEffect} from 'pwa-kit-react-sdk/ssr/universal/server-effects'
+import contentfulApi from '../../contentful-api'
+import {gql} from '@apollo/client';
+
 // Others
 import {getAssetUrl} from 'pwa-kit-react-sdk/ssr/universal/utils'
 import {heroFeatures, features} from './data'
@@ -49,6 +53,21 @@ import {
 const Home = ({productSearchResult, isLoading}) => {
     const intl = useIntl()
 
+    const {data} = useServerEffect(async () => {
+        const data = await contentfulApi.query(gql`
+            query {
+                cardCollection {
+                    total
+                }
+            }
+        `)
+
+        console.log('=============during component rendering===============')
+        console.log(contentfulApi.getClient().extract())
+
+        return data
+    }, [])
+
     return (
         <Box data-testid="home-page" layerStyle="page">
             <Seo
@@ -56,6 +75,8 @@ const Home = ({productSearchResult, isLoading}) => {
                 description="Commerce Cloud Retail React App"
                 keywords="Commerce Cloud, Retail React App, React Storefront"
             />
+
+            {JSON.stringify(data)}
 
             <Hero
                 title={intl.formatMessage({

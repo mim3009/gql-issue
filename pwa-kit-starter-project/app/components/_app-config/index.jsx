@@ -23,6 +23,8 @@ import {resolveSiteFromUrl} from '../../utils/site-utils'
 import {resolveLocaleFromUrl} from '../../utils/utils'
 import {getConfig} from 'pwa-kit-runtime/utils/ssr-config'
 
+import contentfulApi from '../../contentful-api'
+
 /**
  * Use the AppConfig component to inject extra arguments into the getProps
  * methods for all Route Components in the app – typically you'd want to do this
@@ -48,7 +50,7 @@ const AppConfig = ({children, locals = {}}) => {
     )
 }
 
-AppConfig.restore = (locals = {}) => {
+AppConfig.restore = (locals = {}, frozen = {}) => {
     const path =
         typeof window === 'undefined'
             ? locals.originalUrl
@@ -65,10 +67,17 @@ AppConfig.restore = (locals = {}) => {
 
     apiConfig.parameters.siteId = site.id
 
+    console.log('=============during restore===============')
+    console.log(frozen.contentfulApolloState)
+    contentfulApi.getClient().restore(frozen.contentfulApolloState)
     locals.api = new CommerceAPI({...apiConfig, locale: locale.id, currency})
 }
 
-AppConfig.freeze = () => undefined
+AppConfig.freeze = () => {
+    return {
+        contentfulApolloState: contentfulApi.getClient().extract()
+    }
+}
 
 AppConfig.extraGetPropsArgs = (locals = {}) => {
     return {
